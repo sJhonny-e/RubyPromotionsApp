@@ -31,7 +31,7 @@ describe Checkout do
 		end
 
 		describe "simple total" do
-			it "sums the prices of one product" do
+			it "sums the price of one product" do
 				@checkout.scan @costs10
 
 				expect(@checkout.total).to eql(10.00)
@@ -57,32 +57,32 @@ describe Checkout do
 		describe "with promotions" do
 
 			it "invokes one promotion visitor" do
-				promotionDouble = double
-				checkoutWithPromotions = Checkout.new([promotionDouble])
+				promotion_double = double
+				checkout_with_promotions = Checkout.new([promotion_double])
 
-				expect(promotionDouble).to receive(:visit).with(checkoutWithPromotions)
+				expect(promotion_double).to receive(:visit).with(checkout_with_promotions)
 
-				checkoutWithPromotions.total
+				checkout_with_promotions.total
 			end
 
 			it "invokes multiple promotion visitors in order" do
-				firstPromotion = double("first")
-				allow(firstPromotion).to receive(:order).and_return(1)
+				first_promotion = double("first")
+				allow(first_promotion).to receive(:order).and_return(1)
 
-				secondPromotion = double("second")
-				allow(secondPromotion).to receive(:order).and_return(2)
+				second_promotion = double("second")
+				allow(second_promotion).to receive(:order).and_return(2)
 
-				thirdPromotion = double("third")
-				allow(thirdPromotion).to receive(:order).and_return(3)
+				third_promotion = double("third")
+				allow(third_promotion).to receive(:order).and_return(3)
 
-				doubles = [ thirdPromotion, secondPromotion,firstPromotion] 
-				checkoutWithPromotions = Checkout.new(doubles)
+				doubles = [ third_promotion, second_promotion,first_promotion] 
+				checkout_with_promotions = Checkout.new(doubles)
 
-				expect(firstPromotion).to receive(:visit).with(checkoutWithPromotions).ordered
-				expect(secondPromotion).to receive(:visit).with(checkoutWithPromotions).ordered
-				expect(thirdPromotion).to receive(:visit).with(checkoutWithPromotions).ordered
+				expect(first_promotion).to receive(:visit).with(checkout_with_promotions).ordered
+				expect(second_promotion).to receive(:visit).with(checkout_with_promotions).ordered
+				expect(third_promotion).to receive(:visit).with(checkout_with_promotions).ordered
 
-				checkoutWithPromotions.total
+				checkout_with_promotions.total
 			end
 		end
 

@@ -42,21 +42,21 @@ describe TotalPriceDiscountPromotion do
 
 	describe "#visit" do
 		it "doesn't change total when the total is 0" do
-			checkoutDouble = CheckoutDouble.new
+			checkout_double = CheckoutDouble.new
 
-			expect{@total_price_promotion.visit(checkoutDouble)}.to_not change{checkoutDouble.calculated_total}
+			expect{@total_price_promotion.visit(checkout_double)}.to_not change{checkout_double.calculated_total}
 		end
 
 		it "doesn't change total when it's exactly the limit" do
-			checkoutDouble = CheckoutDouble.new(60)
+			checkout_double = CheckoutDouble.new(60)
 
-			expect{@total_price_promotion.visit(checkoutDouble)}.to_not change{checkoutDouble.calculated_total}
+			expect{@total_price_promotion.visit(checkout_double)}.to_not change{checkout_double.calculated_total}
 		end
 
 		it "decreases total by 10% when it's over the limit" do
-			checkoutDouble = CheckoutDouble.new(61)
+			checkout_double = CheckoutDouble.new(61)
 
-			expect{@total_price_promotion.visit(checkoutDouble)}.to change{checkoutDouble.calculated_total}.from(61).to(54.9)
+			expect{@total_price_promotion.visit(checkout_double)}.to change{checkout_double.calculated_total}.from(61).to(54.9)
 		end
 	end
 end
